@@ -1,0 +1,12 @@
+server:
+  port: 8083
+
+# redis 配置
+# 地址
+spring:
+  redis:
+    host: middletest.wison.com
+  #密码
+    password: wison-redis-wJc5j
+  #端口号
+    port: 6379

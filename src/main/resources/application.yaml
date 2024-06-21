@@ -1,5 +1,11 @@
 server:
   port: 8083
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+
 
 # redis 配置
 # 地址

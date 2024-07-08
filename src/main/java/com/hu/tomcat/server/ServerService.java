@@ -34,10 +34,11 @@ public class ServerService {
     private MessageService messageService = SpringContextUtils.getBean(MessageService.class);
 
     /**
-     * 当WebSocket建立连接成功后会触发这个注解修饰的方法。
-     *
-     * @param session
-     * @param token
+     *  当WebSocket建立连接成功后会触发这个注解修饰的方法。
+     * @param session 连接
+     * @param sourceSystem 系统来源（比如：wison-punch  或者 wison-scm
+     * @param clientSign 客户端标识，可以是客户端ip
+     * @param token 用户token
      */
     @OnOpen
     public void onOpen(Session session, @PathParam("sourceSystem") String sourceSystem, @PathParam("clientSign") String clientSign, @PathParam("token") String token) {

@@ -24,16 +24,18 @@ public class ServerService implements WebSocketHandler {
     private MessageService messageService;
 
     /**
-     * 建立连接
-     *
-     * @param session Session
+     *  当WebSocket建立连接成功后会触发这个注解修饰的方法。
+     * @param session 连接
+     * @param-sourceSystem 系统来源（比如：wison-punch  或者 wison-scm
+     * @param-clientSign 客户端标识，可以是客户端ip
+     * @param-userInfo 用户信息，在拦截器中添加到里面的
      */
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         Map<String, Object> attributes = session.getAttributes();
-        UserInfo user = (UserInfo) attributes.get("userInfo");
-        String clientSign = (String) attributes.get("clientSign");
         String sourceSystem = (String) attributes.get("sourceSystem");
+        String clientSign = (String) attributes.get("clientSign");
+        UserInfo user = (UserInfo) attributes.get("userInfo");
 
 
         // 非集群内其他客户端建立的连接才进行以下操作

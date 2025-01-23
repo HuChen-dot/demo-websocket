@@ -1,9 +1,6 @@
 package com.hu.spring.server.interceptor;
 
-import com.hu.spring.common.pojo.UserInfo;
-import com.hu.spring.common.service.TokenService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
@@ -14,10 +11,6 @@ import java.util.Map;
 
 @Slf4j
 public class WebSocketInterceptor  implements HandshakeInterceptor {
-
-
-    @Autowired
-    private TokenService tokenService;
 
     /**
      * 建立请求之前，可以用来做权限判断
@@ -37,13 +30,12 @@ public class WebSocketInterceptor  implements HandshakeInterceptor {
         if (request instanceof ServletServerHttpRequest) {
             ServletServerHttpRequest servletServerHttpRequest = (ServletServerHttpRequest) request;
             // 模拟用户（通常利用JWT令牌解析用户信息）
-            String token = servletServerHttpRequest.getServletRequest().getParameter("token");
+            String userId = servletServerHttpRequest.getServletRequest().getParameter("userId");
             String sourceSystem = servletServerHttpRequest.getServletRequest().getParameter("sourceSystem");
             String clientSign = servletServerHttpRequest.getServletRequest().getParameter("clientSign");
             try {
-                UserInfo user = tokenService.getUser(token, sourceSystem, clientSign);
                 // 设置当前这个session的属性，后续我们在发送消息时，可以通过 session.getAttributes().get("clientUserInfo")可以取出 clientUserInfo参数
-                attributes.put("userInfo", user);
+                attributes.put("userId", userId);
                 attributes.put("clientSign", clientSign);
                 attributes.put("sourceSystem", sourceSystem);
             } catch (Exception e) {

@@ -2,7 +2,7 @@ package com.hu.tomcat.server;
 
 import com.hu.tomcat.common.pojo.Constant;
 import com.hu.tomcat.common.service.MessageService;
-import com.hu.util.LocalIpUtils;
+import com.hu.util.IpUtil;
 import com.hu.util.RedisUtils;
 import com.hu.util.SpringContextUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -52,7 +52,7 @@ public class ServerService {
             // 将当前用户存在的客户端ip进行存储，一个用户可能会在多个客户端登陆
             redisUtils.setForSet(Constant.USER_CLIENT_SIGN_KEY + userId + sourceSystem, Arrays.asList(clientSign));
             // 将当前用户和当前服务器进行绑定,放进分布式存储中，用于用户消息转发时找到目标服务器
-            redisUtils.set(Constant.USER_SERVER_REGISTER_KEY + userKey, LocalIpUtils.getIntranetIP() + ":" + messageService.port);
+            redisUtils.set(Constant.USER_SERVER_REGISTER_KEY + userKey, IpUtil.getIp() + ":" + messageService.port);
         }
 
         // 将用户和session绑定

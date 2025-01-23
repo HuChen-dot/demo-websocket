@@ -2,7 +2,7 @@ package com.hu.spring.client;
 
 
 import com.hu.spring.common.pojo.Constant;
-import com.hu.util.LocalIpUtils;
+import com.hu.util.IpUtil;
 import com.hu.util.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class ClientInit {
             return;
         }
         // 当前服务器url
-        String ip = LocalIpUtils.getIntranetIP();
+        String ip = IpUtil.getIp();
         String host = ip + ":" + port;
         for (String server : forSetAll) {
             if (server.equals(host)) {
@@ -58,7 +58,7 @@ public class ClientInit {
     }
 
     public void start(String server){
-        String ip = LocalIpUtils.getIntranetIP();
+        String ip = IpUtil.getIp();
         String host = ip + ":" + port;
         // 进行链接
         try {

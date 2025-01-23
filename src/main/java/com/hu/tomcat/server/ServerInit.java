@@ -1,7 +1,7 @@
 package com.hu.tomcat.server;
 
 import com.hu.tomcat.common.pojo.Constant;
-import com.hu.util.LocalIpUtils;
+import com.hu.util.IpUtil;
 import com.hu.util.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +49,7 @@ public class ServerInit {
     @PostConstruct
     public void init() {
         // 将当前服务端注册到注册中心
-        String ip = LocalIpUtils.getIntranetIP();
+        String ip = IpUtil.getIp();
         String host = ip + ":" + port;
         redisUtils.setForSet(Constant.SERVER_REGISTER_KEY, Arrays.asList(host));
 
@@ -67,7 +67,7 @@ public class ServerInit {
     @PreDestroy
     public void stop() {
         // 关闭服务
-        String ip = LocalIpUtils.getIntranetIP();
+        String ip = IpUtil.getIp();
         String host = ip + ":" + port;
         redisUtils.delForSet(Constant.SERVER_REGISTER_KEY,host);
         log.info("websocket服务端关闭");
